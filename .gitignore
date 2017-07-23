@@ -5,5 +5,4 @@
 *.egg-info  
 dist  
 build
-/MainCrawler/douban/settings.py
 /.vscode
