@@ -91,5 +91,5 @@ RANDOMIZE_DOWNLOAD_DELAY = True
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-DOUBAN_ACCOUNT = 'cccchan17@163.com'
-DOUBAN_PWD = "chen1994"
+BID = 'HCIfffL1qYE'
+DBCL2 = "127794997:ddnYuK49JDc"
