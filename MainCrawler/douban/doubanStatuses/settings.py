@@ -16,7 +16,7 @@ NEWSPIDER_MODULE = 'doubanStatuses.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
+USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -91,5 +91,6 @@ RANDOMIZE_DOWNLOAD_DELAY = True
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-BID = 'HCIfffL1qYE'
-DBCL2 = "127794997:ddnYuK49JDc"
+BID = 'JJIBq62ZtdU'
+DBCL2 = "127794997:URS9ghDqE20"
+				
