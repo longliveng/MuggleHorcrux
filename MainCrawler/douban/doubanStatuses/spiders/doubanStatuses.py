@@ -15,7 +15,7 @@ class DoubanStatusesSpider(scrapy.Spider):
 
     def __init__(self, *args, **kwargs):
         super(DoubanStatusesSpider, self).__init__(*args, **kwargs)
-        self.aboutMysql()        
+        self.aboutMysql()
 
     def aboutMysql(self):
         # Connect to the database
@@ -24,7 +24,7 @@ class DoubanStatusesSpider(scrapy.Spider):
             user='root',
             password='cyhcyh',
             db='muggle_horcrux',
-            charset='utf8',
+            charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor)
 
         self.DBcursor = self.dbCon.cursor()
@@ -32,46 +32,51 @@ class DoubanStatusesSpider(scrapy.Spider):
     # python3 -m scrapy crawl DoubanStatuses -a username=cyh1985
     def start_requests(self):
         username = getattr(self, 'username', None)
-        self.username=username
+        self.username = username
 
-        # for pageNo in range(1, 1501):
-        for pageNo in range(1, 2):
-            urlNow = 'https://www.douban.com/people/%s/statuses?p=%s' % (username,pageNo)
+        for pageNo in range(1, 1501):
+            urlNow = 'https://www.douban.com/people/%s/statuses?p=%s' % (
+                username, pageNo)
             urlNow.format(username, pageNo)
 
             yield scrapy.Request(url=urlNow, callback=self.stupidParse, cookies={'bid': self.settings['BID'], 'dbcl2': self.settings['DBCL2']})
 
+    # TODO downloadermiddlewares 中间件 handle 302 response code
     def stupidParse(self, response):
 
-        print('---------------this----------------------------1111')
-        
-        # result = self.DBcursor.fetchone()
-        print(response)
-        for itemStatus in response.xpath('//div[contains(@class,"new-status")]').extract():
-            itemUrl=Selector(text=itemStatus).css('.created_at a::attr(href)').extract_first()
-            itemDate=Selector(text=itemStatus).css('.created_at::attr(title)').extract_first()
+        checkFeeds = response.xpath(
+            '//div[contains(@class,"new-status")]').extract()
+        if not checkFeeds:
+            print(
+                '------------------ Web crawlers to stop, because no feeds found ---------------------')
 
-            itemImgUrl=Selector(text=itemStatus).css('.group-pic a::attr(href)').extract()
+            sqlAddLog = "INSERT INTO `sns_log`(`account`,`message`,`create_date`)VALUES(%s,%s,%s);"
 
-            itemImgUrl=",".join(itemImgUrl)
+            logMessage = "douban crawler stop, url is " + response.url
+            currentStamp = str(int(time.time()))
 
-            # print(itemUrl)
-            # print(type(itemUrl))
-
-            # print(self.username)
-            # print(type(self.username))
-
-            # print(itemImgUrl)
-            # print(type(itemImgUrl))
-
-            
-            # exit()
-            sqlAdd = "INSERT INTO `sns_item`(`content`,`url`,`item_date`,`platform`,`account`,`img_url`,`img_path`)VALUES(%s,%s,%s,%s,%s,%s,%s);"
-            
-            # todo itemStatus 转义
-            self.DBcursor.execute(sqlAdd, (itemStatus, itemUrl,itemDate, '1',self.username,itemImgUrl,''))
+            self.DBcursor.execute(
+                sqlAddLog, (self.username, logMessage, currentStamp))
             self.dbCon.commit()
 
+            exit()
+
+        for itemStatus in response.xpath('//div[contains(@class,"new-status")]').extract():
+            itemUrl = Selector(text=itemStatus).css(
+                '.created_at a::attr(href)').extract_first()
+            itemDate = Selector(text=itemStatus).css(
+                '.created_at::attr(title)').extract_first()
+
+            itemImgUrl = Selector(text=itemStatus).css(
+                '.group-pic a::attr(href)').extract()
+
+            itemImgUrl = ",".join(itemImgUrl)
+
+            sqlAdd = "INSERT INTO `sns_item`(`content`,`url`,`item_date`,`platform`,`account`,`img_url`,`img_path`)VALUES(%s,%s,%s,%s,%s,%s,%s);"
+
+            self.DBcursor.execute(
+                sqlAdd, (itemStatus, itemUrl, itemDate, '1', self.username, itemImgUrl, ''))
+            self.dbCon.commit()
 
     def closed(self, reason):
         self.dbCon.close()

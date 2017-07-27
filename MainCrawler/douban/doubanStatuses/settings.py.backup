@@ -91,6 +91,5 @@ RANDOMIZE_DOWNLOAD_DELAY = True
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-BID = 'JJIBq62ZtdU'
-DBCL2 = "127794997:URS9ghDqE20"
-				
+BID = 'sbsbs'
+DBCL2 = "sbsbs"
