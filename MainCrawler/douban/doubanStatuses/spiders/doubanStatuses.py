@@ -51,7 +51,7 @@ class DoubanStatusesSpider(scrapy.Spider):
             print(
                 '------------------ Web crawlers to stop, because no feeds found ---------------------')
 
-            sqlAddLog = "INSERT INTO `sns_log`(`account`,`message`,`create_date`)VALUES(%s,%s,%s);"
+            sqlAddLog = "INSERT INTO `sns_log`(`account`,`message`,`create_time`)VALUES(%s,%s,%s);"
 
             logMessage = "douban crawler stop, url is " + response.url
             currentStamp = str(int(time.time()))
