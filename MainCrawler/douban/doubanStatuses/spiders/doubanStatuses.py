@@ -34,6 +34,7 @@ class DoubanStatusesSpider(scrapy.Spider):
         username = getattr(self, 'username', None)
         self.username = username
 
+        # for pageNo in range(19, 20):
         for pageNo in range(1, 1501):
             urlNow = 'https://www.douban.com/people/%s/statuses?p=%s' % (
                 username, pageNo)
@@ -64,6 +65,11 @@ class DoubanStatusesSpider(scrapy.Spider):
         for itemStatus in response.xpath('//div[contains(@class,"new-status")]').extract():
             itemUrl = Selector(text=itemStatus).css(
                 '.created_at a::attr(href)').extract_first()
+                      
+            if itemUrl is None:
+                print('hhhhhhhhhhhh itemUrl is none')
+                continue
+
             itemDate = Selector(text=itemStatus).css(
                 '.created_at::attr(title)').extract_first()
 
