@@ -60,7 +60,7 @@ class DoubanStatusesSpider(scrapy.Spider):
                 sqlAddLog, (self.username, logMessage, currentStamp))
             self.dbCon.commit()
 
-            exit()
+            raise CloseSpider('stop spider')
 
         for itemStatus in response.xpath('//div[contains(@class,"new-status")]').extract():
             itemUrl = Selector(text=itemStatus).css(

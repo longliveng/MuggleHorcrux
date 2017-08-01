@@ -16,5 +16,4 @@ CREATE TABLE `sns_log` (
   `account` varchar(45) NOT NULL COMMENT '爬的账号名称',
   `message` varchar(150) DEFAULT NULL COMMENT '巴拉巴拉',
   `create_time` int(10) NOT NULL,
-  PRIMARY KEY (`account`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
