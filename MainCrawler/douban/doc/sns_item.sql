@@ -8,8 +8,9 @@ CREATE TABLE `sns_item` (
   `img_url` text CHARACTER SET utf8 COMMENT '图片原始url,带域名',
   `img_path` text CHARACTER SET utf8 COMMENT '储存图片到本地的相对路径',
   PRIMARY KEY (`id`),
-  KEY `platformANDaccount` (`platform`,`account`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COMMENT='爬sns 的feed';
+  KEY `platformANDaccount` (`platform`,`account`),
+  FULLTEXT KEY `con_fulltext` (`content`) WITH PARSER `ngram`
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='爬sns 的feed';
 
 
 CREATE TABLE `sns_log` (
@@ -17,3 +18,5 @@ CREATE TABLE `sns_log` (
   `message` varchar(150) DEFAULT NULL COMMENT '巴拉巴拉',
   `create_time` int(10) NOT NULL,
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+SELECT count(*) FROM muggle_horcrux.sns_item WHERE MATCH(content) AGAINST('*哈*' in boolean mode);
