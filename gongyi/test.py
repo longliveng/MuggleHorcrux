@@ -1,0 +1,6 @@
+import re
+
+html = '<p style="white-space: normal;">壹基金儿童平安计划是壹基金长期项目，截止到2018年8月15日该项目共筹得善款142749.59元 </p><p style="white-space: noral;">2018年99公益日，我们继续出发，支持联合救灾网络伙伴能力建设，以为更多有需要的孩子送去安全教育课程。</p><p style="white-space: normal;"> A、公众筹款目标：1000000元</p><p style="white-space: normal;">  ——支持儿童平安小课堂</p><ul><li>捐赠6元，帮助1个孩子获得1堂安全教育课程；</li><li>捐赠10元，为1名儿童添置1个儿童应急包；</li><li>捐赠30元，使1个孩子接受一套完整的儿童平安小课堂教学；</li><li>捐赠85元，让1个孩子在一个学期中全面参与儿童平安教育，提升自救互救能力。——支持儿童平安训练营</li><li>捐赠100元 ，帮助1名儿童在安全教育车及周边活动中切身体验灾害来临的模拟场景，赋予孩子最直接最有效的自救互救的能力与方法，让孩子幸免于难。</li></ul><p style="white-space: normal;">——支持减灾示范校园</p><ul><li>众筹79,500元，帮一间乡村学校建成减灾示范校园，涵盖教师能力建设、儿童安全教育、校园安全文化、校园风险管理等多个方面的综合能力提升，为在校学生打造平安放心的校园环境与文化。  </li></ul><p style="white-space: normal;"></p><p style="white-space: normal;">  B、配捐使用方向：企业和腾讯配捐部分的预算计划将主要用于壹基金儿童平安计划，99公益日结束并确认了“企业和腾讯配捐”具体金额后15天内，再补充详细预算表。</p><p style="white-space: normal;"> C、  管理费说明： 我们承诺该项列支累计不超过当年总支出的10%。 ，用于执行机构工作费用，成员的工资、办公费、水电费、交通费等。 </p><p><img src="//imgcdn.gongyi.qq.com/gongyi/a7534d930be368fb686a26c3b91e0d26f57aa20e2e73e5332890ca8fdfa9a809/500" style="max-width:100%;"></p><p></p>'
+pureBudget = re.compile(r'<img', re.S).sub('图片：', html)
+pureBudget = re.compile(r'<[^>]+>', re.S).sub('', pureBudget)
+print(pureBudget)

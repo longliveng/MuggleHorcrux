@@ -19,4 +19,4 @@ CREATE TABLE `sns_log` (
   `create_time` int(10) NOT NULL,
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-SELECT * FROM muggle_horcrux.sns_item where MATCH (content) AGAINST ('哈哈*' IN BOOLEAN MODE) AND platform=1 AND account='sbsb'
+SELECT count(*) FROM muggle_horcrux.sns_item WHERE MATCH(content) AGAINST('*哈*' in boolean mode);

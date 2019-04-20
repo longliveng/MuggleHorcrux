@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
-# from scrapy.mail import MailSender
 import datetime
 import json
-# import sys
 import time
-
 import pymysql.cursors
 import scrapy
 from scrapy.selector import Selector
@@ -16,7 +13,7 @@ class DoubanStatusesSpider(scrapy.Spider):
     def __init__(self, *args, **kwargs):
         super(DoubanStatusesSpider, self).__init__(*args, **kwargs)
         self.aboutMysql()
-
+    
     def aboutMysql(self):
         # Connect to the database
         self.dbCon = pymysql.connect(
@@ -60,7 +57,7 @@ class DoubanStatusesSpider(scrapy.Spider):
                 sqlAddLog, (self.username, logMessage, currentStamp))
             self.dbCon.commit()
 
-            raise CloseSpider('stop spider')
+            raise scrapy.exceptions.CloseSpider('stop spider')
 
         for itemStatus in response.xpath('//div[contains(@class,"new-status")]').extract():
             itemUrl = Selector(text=itemStatus).css(
